@@ -1,0 +1,16 @@
+GET http://localhost:1122
+
+
+
+###
+GET http://localhost:1122/api/auth/register
+
+###
+POST http://localhost:1122/api/auth/register
+
+"Content-Type":"application/json" 
+
+{
+"email":"fulano@gmail.com",
+"pass":"pass123"
+}
