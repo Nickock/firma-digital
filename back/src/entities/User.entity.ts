@@ -36,6 +36,9 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   signHash: string
 
+  @Column({ type: 'varchar', nullable: true })
+  verificationEmailCode: string
+
   @Column({ type: 'enum', enum: UserStatus, default: UserStatus.CREATED })
   status: UserStatus
 
@@ -45,7 +48,14 @@ export class User extends BaseEntity {
   @OneToMany(() => AuditLog, (auditLog) => auditLog.user)
   auditLogs: AuditLog[]
 
-  @OneToOne(() => UserKey)
+  @OneToOne(() => UserKey, (userKey) => userKey.user, {
+    cascade: true,
+    nullable: true
+  })
   @JoinColumn({ name: 'userKey_id' })
-  userKey_id: string
+  userKey: UserKey
+
+  // @OneToOne(() => UserKey)
+  // @JoinColumn({ name: 'userKey_id' })
+  // userKey_id: string
 }

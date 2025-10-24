@@ -1,3 +1,3 @@
-export default function apiResponse(sucess: boolean, payload: object) {
-  return { sucess: sucess, payload: payload }
+export default function apiResponse(success: boolean, payload: object) {
+  return { success: success, payload: payload }
 }
