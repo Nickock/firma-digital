@@ -10,6 +10,7 @@ import { UserProfile } from '../pages/UserProfile'
 import { ProtectedRoute } from '../components/protectRoute'
 import { BiometricDataPanel } from '../pages/BiomtricDataPanel'
 import { AddDigitalSign } from '../pages/AddDigitalSign'
+import { SignDocument } from '../pages/SignDocument'
 
 export const mainRouter = createBrowserRouter([
   {
@@ -63,7 +64,8 @@ export const mainRouter = createBrowserRouter([
 
           { path: 'perfil', element: <UserProfile /> },
           { path: 'datos-biometricos', element: <BiometricDataPanel /> },
-          { path: 'adjunta-firma', element: <AddDigitalSign /> }
+          { path: 'adjunta-firma', element: <AddDigitalSign /> },
+          { path: 'firmar-documento', element: <SignDocument /> }
         ]
       }
     ]
