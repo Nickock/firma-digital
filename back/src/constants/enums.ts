@@ -13,6 +13,7 @@ export enum HttpStatus {
 export enum AuditLogActions {
   USER_CREATED = 'user_created',
   EMAIL_VERIFICATION = 'email_verification',
+  USER_DATA_UPDATED = 'user_data_updated',
   USER_AUNTENTIFIED = 'user_autentified',
   USER_COMPLETED = 'user_completed'
 }
@@ -20,6 +21,7 @@ export enum AuditLogActions {
 export enum UserStatus {
   CREATED = 'created',
   EMAIL_VERIFIED = 'email_verified',
+  DATA_UPLOAD = 'data_upload',
   AUNTENTIFIED = 'autentified',
   COMPLETED = 'completed'
 }

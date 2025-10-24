@@ -10,6 +10,16 @@ const PORT = process.env.PORT
 const app = express()
 
 app.use(cors())
+
+// app.use(
+//   cors({
+//     origin: '*',
+//     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+//     credentials: true
+//   })
+// )
+
 app.use(express.json())
 
 app.get('/', (req, res) => {

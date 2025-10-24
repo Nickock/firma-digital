@@ -6,4 +6,5 @@ export interface IRegisterPayload {
 export interface IAuthResponse {
   token: string
   error?: string
+  code?: string
 }

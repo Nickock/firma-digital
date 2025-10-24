@@ -8,10 +8,11 @@ export const generateToken = (payload: IjwtPayload): string => {
     token = jwt.sign(
       {
         id: payload.id,
-        role: payload.role
+        role: payload.role,
+        status: payload.status
       },
       process.env.JWT_SECRET,
-      { expiresIn: 30 * 60 }
+      { expiresIn: process.env.mode == 'dev' ? '24h' : '30min' }
     )
   return token
 }
