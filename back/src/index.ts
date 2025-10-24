@@ -5,7 +5,6 @@ import 'colors'
 import './db/connect'
 import { AppDataSource } from './db/connect'
 import { apiRouter } from './routers/routers'
-// import { jwtMiddleware } from './middlewares/authMiddleware'
 const PORT = process.env.PORT
 const app = express()
 
@@ -21,6 +20,12 @@ app.use(cors())
 // )
 
 app.use(express.json())
+
+//Endpoint unicamente para simular el endpoint de pymes
+app.post('/pyme_back', (req, res) => {
+  console.log(req.body)
+  res.status(200).json(req.body)
+})
 
 app.get('/', (req, res) => {
   res.json({ message: 'api on' })

@@ -28,5 +28,6 @@ export enum UserStatus {
 
 export enum UserRole {
   USER = 'user',
-  ADMIN = 'admin'
+  ADMIN = 'admin',
+  EXTERNAL_APP = 'external_app'
 }
