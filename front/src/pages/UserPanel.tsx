@@ -66,7 +66,7 @@ export const UserPanel = () => {
             [{formatUserStatus(userStatus)}]
           </span>
         </h3>
-        {userStep >= 6 ? (
+        {userStep < 5 ? (
           <div>
             <div className='relative'>
               {userStep >= 1 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
