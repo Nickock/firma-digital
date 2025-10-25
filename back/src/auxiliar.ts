@@ -1,5 +1,5 @@
 // import CryptoKey from './utils/keyUtils'
-
+// import crypto from 'crypto'
 console.log('AUXILIAR.TS BEGIN'.bgCyan)
 
 //Asi se desencripta la clave privada
@@ -16,18 +16,17 @@ console.log('AUXILIAR.TS BEGIN'.bgCyan)
 
 //ASI:
 
-/*
-   const isValid = crypto.verify(
-        'sha256',
-        Buffer.from(doc_hash),
-        {
-          key: public_key,
-          type: 'spki',
-          format: 'pem'
-        },
-        Buffer.from(signatureBase64, 'base64')
-      )
+// const isValid = crypto.verify(
+//   'sha256',
+//   Buffer.from(doc_hash),
+//   {
+//     key: public_key,
+//     type: 'spki',
+//     format: 'pem'
+//   },
+//   Buffer.from(signatureBase64, 'base64')
+// )
 
-      console.log('FIRMA VALIDA : ' + isValid)*/
+// console.log('FIRMA VALIDA : ' + isValid)
 
 console.log('AUXILIAR.TS END'.bgCyan)

@@ -6,9 +6,9 @@ import { SignRequest } from './SignRequest.entity'
 export class ExternalApp extends BaseEntity {
   @Column({ type: 'varchar', nullable: false, unique: true })
   email: string
-  @Column({ type: 'varchar', nullable: false, unique: true })
+  @Column({ type: 'varchar', nullable: false, unique: false })
   name: string
-  @Column({ type: 'varchar', nullable: false, unique: true })
+  @Column({ type: 'varchar', nullable: false, unique: false })
   api_key: string
 
   @OneToMany(() => SignRequest, (signRequest) => signRequest.external_app)
