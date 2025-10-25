@@ -1,4 +1,4 @@
-export const UserStatus = Object.freeze({
+const UserStatus = Object.freeze({
   CREATED: 'created',
   EMAIL_VERIFIED: 'email_verified',
   DATA_UPLOAD: 'data_upload',
@@ -13,13 +13,30 @@ export const formatUserStatus = (status: string | null): string => {
     case UserStatus.EMAIL_VERIFIED:
       return 'Email verificado'
     case UserStatus.DATA_UPLOAD:
-      return 'Información personal adjuntada'
+      return 'Datos personales'
     case UserStatus.AUNTENTIFIED:
-      return 'Autentificado biométricamente'
+      return 'Autentificado'
     case UserStatus.COMPLETED:
-      return 'Completado'
+      return 'Firma activa'
     default:
       return 'No se pudo determinar el estado de su cuenta.'
+  }
+}
+
+export const formatUserStatusColor = (status: string | null): string => {
+  switch (status) {
+    case UserStatus.CREATED:
+      return '#E82727'
+    case UserStatus.EMAIL_VERIFIED:
+      return '#C9E827'
+    case UserStatus.DATA_UPLOAD:
+      return '#A127E8'
+    case UserStatus.AUNTENTIFIED:
+      return '#7727E8'
+    case UserStatus.COMPLETED:
+      return '#27E8D1'
+    default:
+      return 'white'
   }
 }
 

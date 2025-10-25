@@ -1,5 +1,12 @@
 import { useCallback, useState } from 'react'
-import { getUserData, updateUserData, getUserStatus, addBiometricData, addSignHashData } from '../services/userService'
+import {
+  getUserData,
+  updateUserData,
+  getUserStatus,
+  addBiometricData,
+  addSignHashData,
+  signDocument
+} from '../services/userService'
 import type { signHashFormData, userDataFormData } from '../schemas/UserSchemas'
 
 export const useUser = () => {
@@ -105,7 +112,28 @@ export const useUser = () => {
     }
   }
 
+  const sendSignatureDocument = async (signId: string): Promise<signDocumentResponse> => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const result = await signDocument(signId)
+      if (!result.success) {
+        if ('errors' in result.payload) setError(result.payload.errors[0])
+      }
+
+      console.log('[useUser] : sendSignatureDocument =>', result)
+      return result
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Error desconocido'
+      setError(errorMessage)
+      throw err
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
+    sendSignatureDocument,
     updateSignHashData,
     updateBiometricData,
     getProfileStatus,
@@ -135,4 +163,17 @@ type userDataResponse = {
   birthDate?: string //"1970-01-01T00:00:00.000Z",
   dni?: string
   phone?: string
+}
+
+export interface signDocumentResponse {
+  success: boolean
+  payload: signDocumentResponsePayload
+}
+
+export interface signDocumentResponsePayload {
+  message?: string
+  return_url?: string
+  external_success?: boolean
+  external_error?: string //external app errors:
+  error?: string
 }

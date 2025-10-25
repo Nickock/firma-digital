@@ -6,9 +6,9 @@ import { useSessionStorage } from './useSessionStorage'
 export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [token, setToken] = useSessionStorage('token')
+  const [, setToken] = useSessionStorage('token')
 
-  if (token) console.log('token ok')
+  // if (token) console.log('token ok')
 
   const register = async (registerData: RegisterFormData) => {
     setIsLoading(true)

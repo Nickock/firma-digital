@@ -174,3 +174,17 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.text-gradient-2 {
+  background: #276e45;
+  background: linear-gradient(
+    -45deg,
+    rgb(33, 216, 109) 0%,
+    rgb(72, 91, 199) 55%,
+    rgb(72, 91, 199) 56%,
+    rgb(33, 216, 109) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
