@@ -5,7 +5,8 @@ import {
   getUserStatus,
   addBiometricData,
   addSignHashData,
-  signDocument
+  signDocument,
+  newVerifyEmail
 } from '../services/userService'
 import type { signHashFormData, userDataFormData } from '../schemas/UserSchemas'
 
@@ -132,7 +133,28 @@ export const useUser = () => {
     }
   }
 
+  const getNewEmailCode = async (): Promise<{ success: boolean }> => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const result = await newVerifyEmail()
+      if (!result.success) {
+        setError('Error al reenviar el nuevo código por correo')
+      }
+
+      console.log('[useUser] : getNewEmailCode =>', result)
+      return result
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Error desconocido'
+      setError(errorMessage)
+      throw err
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
+    getNewEmailCode,
     sendSignatureDocument,
     updateSignHashData,
     updateBiometricData,

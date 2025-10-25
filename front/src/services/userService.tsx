@@ -112,3 +112,22 @@ export const signDocument = async (signId: string) => {
     console.error('[UserService] addSignHashData : ', error)
   }
 }
+
+export const newVerifyEmail = async () => {
+  const token = sessionStorage.getItem('token')
+  try {
+    const response = await fetch(`${API_URL}/user/verifyEmail/code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`
+      }
+    })
+    // const result = await response.json()
+    // console.log(result)
+    return { success: response.ok }
+  } catch (error) {
+    console.error('[UserService] addSignHashData : ', error)
+    return { success: false }
+  }
+}
