@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 // import { getUserStatus } from '../utils/decodeToken'
-import { getUserStatusStep } from '../utils/formatUserStatus'
+import { formatUserStatus, formatUserStatusColor, getUserStatusStep } from '../utils/formatUserStatus'
 import { Button } from '../components/ui/button'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../hooks/useUser'
@@ -38,7 +38,7 @@ export const UserPanel = () => {
   }, [getProfileStatus])
 
   const navigateToStep = (step: number): void => {
-    console.log('navigate to' + step)
+    // console.log('navigate to' + step)
     switch (step) {
       case 2:
         navigate('/verificar-email')
@@ -57,101 +57,121 @@ export const UserPanel = () => {
   return (
     <div className=' flex flex-col items-center'>
       <div className='flex flex-col '>
-        <h3 className='text-4xl mt-10 mb-15'>Estado de tu cuenta {userStatus}</h3>
-
-        <div className='relative'>
-          {userStep >= 1 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
-          <p className='text-2xl flex items-center justify-between gap-15 '>
-            <span className='text-8xl text-gradient '>1</span>
-            Crear tu cuenta
-            {userStep >= 1 ? (
-              <span>Listo.</span>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigateToStep(1)
-                }}
-              >
-                Pendiente
-              </Button>
-            )}
-          </p>
-        </div>
-        <div className='relative'>
-          {userStep >= 2 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
-          <p className='text-2xl flex items-center justify-between gap-15 '>
-            <span className='text-8xl text-gradient '>2</span>
-            Verificar tu correo
-            {userStep >= 2 ? (
-              <span>Listo.</span>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigateToStep(2)
-                }}
-              >
-                Pendiente
-              </Button>
-            )}
-          </p>
-        </div>
-        <div className='relative'>
-          {userStep >= 3 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
-          <p className='text-2xl flex items-center justify-between gap-15 '>
-            <span className='text-8xl text-gradient '>3</span>
-            Adjuntar tus datos personales
-            {userStep >= 3 ? (
-              <span>Listo.</span>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigateToStep(3)
-                }}
-              >
-                Pendiente
-              </Button>
-            )}
-          </p>
-        </div>
-        <div className='relative'>
-          {userStep >= 4 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
-          <p className='text-2xl flex items-center justify-between gap-15 '>
-            <span className='text-8xl text-gradient '>4</span>
-            Datos biométricos
-            {userStep >= 4 ? (
-              <span>Listo.</span>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigateToStep(4)
-                }}
-              >
-                Pendiente
-              </Button>
-            )}
-          </p>
-        </div>
-        <div className='relative'>
-          {userStep >= 5 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
-          <p className='text-2xl flex items-center justify-between gap-15 '>
-            <span className='text-8xl text-gradient '>5</span>
-            Crea tu firma
-            {userStep >= 5 ? (
-              <span>Listo.</span>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigateToStep(5)
-                }}
-              >
-                Pendiente
-              </Button>
-            )}
-          </p>
-        </div>
+        <h3 className='text-4xl'>
+          Estado de tu cuenta:
+          <span
+            className='text-[var(--primary)] font-medium text-center ml-5'
+            style={{ color: formatUserStatusColor(userStatus) }}
+          >
+            [{formatUserStatus(userStatus)}]
+          </span>
+        </h3>
+        {userStep >= 6 ? (
+          <div>
+            <div className='relative'>
+              {userStep >= 1 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+              <p className='text-2xl flex items-center justify-between gap-15 '>
+                <span className='text-8xl text-gradient '>1</span>
+                Crear tu cuenta
+                {userStep >= 1 ? (
+                  <span>Listo.</span>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      navigateToStep(1)
+                    }}
+                  >
+                    Pendiente
+                  </Button>
+                )}
+              </p>
+            </div>
+            <div className='relative'>
+              {userStep >= 2 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+              <p className='text-2xl flex items-center justify-between gap-15 '>
+                <span className='text-8xl text-gradient '>2</span>
+                Verificar tu correo
+                {userStep >= 2 ? (
+                  <span>Listo.</span>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      navigateToStep(2)
+                    }}
+                  >
+                    Pendiente
+                  </Button>
+                )}
+              </p>
+            </div>
+            <div className='relative'>
+              {userStep >= 3 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+              <p className='text-2xl flex items-center justify-between gap-15 '>
+                <span className='text-8xl text-gradient '>3</span>
+                Adjuntar tus datos personales
+                {userStep >= 3 ? (
+                  <span>Listo.</span>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      navigateToStep(3)
+                    }}
+                  >
+                    Pendiente
+                  </Button>
+                )}
+              </p>
+            </div>
+            <div className='relative'>
+              {userStep >= 4 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+              <p className='text-2xl flex items-center justify-between gap-15 '>
+                <span className='text-8xl text-gradient '>4</span>
+                Datos biométricos
+                {userStep >= 4 ? (
+                  <span>Listo.</span>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      navigateToStep(4)
+                    }}
+                  >
+                    Pendiente
+                  </Button>
+                )}
+              </p>
+            </div>
+            <div className='relative'>
+              {userStep >= 5 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+              <p className='text-2xl flex items-center justify-between gap-15 '>
+                <span className='text-8xl text-gradient '>5</span>
+                Crea tu firma
+                {userStep >= 5 ? (
+                  <span>Listo.</span>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      navigateToStep(5)
+                    }}
+                  >
+                    Pendiente
+                  </Button>
+                )}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <Button
+            className='my-15 text-xl py-8 self-center'
+            onClick={() => {
+              navigate('/panel/firmar-documento')
+            }}
+          >
+            Ir a firmar
+          </Button>
+        )}
       </div>
 
-      <p className='text-4xl my-15 flex items-center justify-between gap-15 '>¡Listo!</p>
+      <p className='text-4xl flex items-center justify-between gap-15 '>¡Listo!</p>
 
       {/* <p>{formatedUserStatus}</p> */}
     </div>

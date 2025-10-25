@@ -66,6 +66,7 @@ export const UserProfile = () => {
         description: 'Datos actualizados correctamente',
         duration: 4000
       })
+      navigate('/panel')
     } else {
       toast.error('Error:', {
         style: { borderColor: '#fa4545ff', backgroundColor: '#fc9c9cff', borderWidth: '2px' },
