@@ -42,8 +42,9 @@ class ExternalAppService {
         callback_url: requestData.callback,
         return_url: requestData.return_url,
         description: requestData.description,
-        // external_app: extApp
-        external_app: extApp
+        external_ref: requestData.external_ref,
+        external_app: extApp,
+        isSigned: false
         // external_app_id: extApp.id
       })
 

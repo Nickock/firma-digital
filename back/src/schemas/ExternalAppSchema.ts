@@ -13,7 +13,8 @@ export const SignRequestSchema = z.object({
   doc_url: z.url(),
   callback: z.url(),
   return_url: z.url(),
-  description: z.string()
+  description: z.string(),
+  external_ref: z.string().nullable()
 })
 
 export type SignRequestData = z.infer<typeof SignRequestSchema>

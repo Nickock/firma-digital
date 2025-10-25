@@ -4,7 +4,7 @@ import { ExternalApp } from './ExternalApp.entity'
 
 @Entity()
 export class SignRequest extends BaseEntity {
-  @Column({ type: 'varchar', nullable: false, unique: true }) //Tal vez haya que eliminar el "unique"
+  @Column({ type: 'varchar', nullable: false /*, unique: true*/ }) //Tal vez haya que eliminar el "unique"
   doc_hash: string
 
   @Column({ type: 'varchar', nullable: true })
@@ -21,6 +21,9 @@ export class SignRequest extends BaseEntity {
 
   @Column({ type: 'varchar', nullable: true })
   description: string
+
+  @Column({ type: 'varchar', nullable: true })
+  external_ref: string
 
   @Column({ type: 'boolean', default: false })
   isSigned: boolean

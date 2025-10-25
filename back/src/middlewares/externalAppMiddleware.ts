@@ -18,7 +18,7 @@ export const externalAppMiddleware = () => {
       const externalApp = await ExternalAppController.existByKey(apiKey)
 
       if (!externalApp.success) {
-        return res.status(HttpStatus.FORBIDDEN).json(apiResponse(false, { error: 'Api key inválida' }))
+        return res.status(HttpStatus.UNAUTHORIZED).json(apiResponse(false, { error: 'Api key inválida' }))
       }
 
       res.locals.app = { key: apiKey, id: externalApp.id }

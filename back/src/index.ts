@@ -12,7 +12,8 @@ app.use(cors())
 
 // app.use(
 //   cors({
-//     origin: '*',
+//     origin: ['*'],
+//     origin: ['*'],
 //     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 //     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 //     credentials: true
@@ -51,3 +52,6 @@ async function main() {
 }
 
 await main()
+
+// Solo para pruebas durante desarrollo:
+import './auxiliar'

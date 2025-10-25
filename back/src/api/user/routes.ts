@@ -67,25 +67,29 @@ userRouter.patch(
   '/',
   statusMiddleware([UserStatus.EMAIL_VERIFIED, UserStatus.DATA_UPLOAD, UserStatus.AUNTENTIFIED, UserStatus.COMPLETED]),
   async (req, res) => {
-    try {
-      const body = validateSchema(req.body, updateUserSchema)
+    // try {
+    const body = validateSchema(req.body, updateUserSchema)
 
-      if (!body.success) {
-        console.log(body.error)
-        return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, JSON.parse(body.error?.message ?? '')))
-      }
-
-      const response = await UserController.updateUser(res.locals.user.id, body.data as updateUserData)
-
-      console.log(response)
-      res
-        .status(HttpStatus.CREATED)
-        .json(apiResponse(true, { message: 'Usuario actualizado correctmente', data: body.data }))
-    } catch (err) {
-      console.error('ERROR'.bgRed)
-      console.error(err)
-      res.status(HttpStatus.SERVER_ERROR).json(apiResponse(false, { error: 'Error del servidor' }))
+    if (!body.success) {
+      console.log(body.error)
+      return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, JSON.parse(body.error?.message ?? '')))
     }
+
+    const response = await UserController.updateUser(res.locals.user.id, body.data as updateUserData)
+
+    console.log(response)
+    if (response.error) {
+      return res.status(HttpStatus.CONFLICT).json(apiResponse(false, response))
+    }
+
+    return res
+      .status(HttpStatus.CREATED)
+      .json(apiResponse(true, { message: 'Usuario actualizado correctmente', data: body.data }))
+    // } catch (err) {
+    //   console.error('ERROR'.bgRed)
+    //   console.error(err)
+    //   res.status(HttpStatus.SERVER_ERROR).json(apiResponse(false, { error: 'Error del servidor' }))
+    // }
   }
 )
 

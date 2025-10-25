@@ -136,9 +136,14 @@ class UserService {
 
       return { data: data }
     } catch (error) {
-      if (error instanceof Error) {
-        console.log('[UserService]:updateUser :'.bgRed, error.message)
+      if (error.code && error.code == '23505') {
+        return { error: 'Ya existe un usuario registrado con ese dni' }
       }
+
+      if (error instanceof Error) {
+        console.error('[UserService]:updateUser :'.bgRed, error.message)
+      }
+      console.error(error)
       return { error: 'Error interno' }
     }
   }
@@ -156,8 +161,10 @@ class UserService {
       user.signHash = data.signHash
 
       //CREAR FIRMA DIGITAL Y SOLO ACTUALIZAR SI LA FIRMA ESTÁ OK
-
       const { publicKey, privateKey } = CryptoKey.generateRSAKeyPair()
+
+      //      const publicKey = 'Public key de pruebas'
+      //      const privateKey = 'Private key de pruebas'
 
       const { encrypted: private_key_hash, iv } = await CryptoKey.encryptWithHash(privateKey, data.signHash)
 
