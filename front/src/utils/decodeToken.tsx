@@ -1,12 +1,16 @@
 import { jwtDecode } from 'jwt-decode'
 
+interface jwtDecoded {
+  id: string
+  status?: string
+}
 export const decodeToken = () => {
   const token = sessionStorage.getItem('token')
   try {
     const tokenData = jwtDecode(token || '')
-    return tokenData
+    return tokenData as jwtDecoded
   } catch {
-    return {}
+    return { status: '' }
   }
 }
 

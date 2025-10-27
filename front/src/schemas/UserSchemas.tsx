@@ -6,7 +6,8 @@ export const userDataSchema = z.object({
   secondName: z.string().nullable().optional(),
   surname: z.string('El apellido es obligatorio').min(3, 'Debe tener al menos 3 caracteres'),
   secondSurname: z.string().nullable().optional(),
-  birthDate: z.preprocess((val) => (typeof val === 'string' ? new Date(val) : val), z.date('Fecha inválida')),
+  //birthDate: z.preprocess((val) => (typeof val === 'string' ? new Date(val) : val), z.date('Fecha inválida')),
+  birthDate: z.string(),
   dni: z.string('El dni es obligatorio').regex(/^\d{8}$/, 'Debe tener exactamente 8 dígitos numéricos'),
   phone: z.string().nullable().optional()
 })

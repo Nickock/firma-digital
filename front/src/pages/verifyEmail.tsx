@@ -10,7 +10,8 @@ import { useUser } from '../hooks/useUser'
 
 export const VerifyEmail = () => {
   const [countdown, setCountdown] = useState(0)
-  const intervalRef = useRef<null | typeof setInterval>(null)
+  // const intervalRef = useRef<null | typeof setInterval>(null)
+  const intervalRef = useRef<undefined | number>(undefined)
   const COOLDOWN_TIME = 150
   const { getNewEmailCode, isLoading } = useUser()
 
@@ -56,7 +57,6 @@ export const VerifyEmail = () => {
           duration: 4000
         })
       }
-
       setCountdown(COOLDOWN_TIME)
       intervalRef.current = setInterval(() => {
         setCountdown((prev) => {
