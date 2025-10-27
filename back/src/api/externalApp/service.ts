@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm'
+import { QueryFailedError, Repository } from 'typeorm'
 import { ExternalApp } from '../../entities/ExternalApp.entity'
 import { AppDataSource } from '../../db/connect'
 import { SignRequestData } from '../../schemas/ExternalAppSchema'
@@ -36,15 +36,15 @@ class ExternalAppService {
       }
 
       const newSignRequest = this.signRequestRepo.create({
-        doc_hash: requestData.doc_hash,
-        doc_id: requestData.doc_id,
-        doc_url: requestData.doc_url,
-        callback_url: requestData.callback,
-        return_url: requestData.return_url,
-        description: requestData.description,
-        external_ref: requestData.external_ref,
-        external_app: extApp,
-        isSigned: false
+        doc_hash: requestData.doc_hash ?? '',
+        doc_id: requestData.doc_id ?? '',
+        doc_url: requestData.doc_url ?? '',
+        callback_url: requestData.callback ?? '',
+        return_url: requestData.return_url ?? '',
+        description: requestData.description ?? '',
+        external_ref: requestData.external_ref ?? '',
+        isSigned: false,
+        external_app: extApp
         // external_app_id: extApp.id
       })
 
@@ -52,7 +52,7 @@ class ExternalAppService {
 
       return { requestId: response.id }
     } catch (error) {
-      if (error.code == '23505') {
+      if (error instanceof QueryFailedError && error.driverError.code == '23505') {
         return { error: 'Ya existe una solicitud de firma para este documento' }
       }
       console.error('ERROR [ExternalAppService:createSignRequest]'.bgRed)

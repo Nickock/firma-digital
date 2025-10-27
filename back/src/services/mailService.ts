@@ -8,7 +8,7 @@ export async function sendWelcomeEmail(email: string, verificationtoken = '123-1
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      'api-key': process.env.BREVO_API_KEY
+      'api-key': process.env.BREVO_API_KEY ?? ''
     },
     body: JSON.stringify({
       sender: { name: 'SecureID', email: 'nc.equipo21@gmail.com' },
@@ -34,7 +34,7 @@ export async function sendEmail(email: string, messages: MailFormat, subject: st
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      'api-key': process.env.BREVO_API_KEY
+      'api-key': process.env.BREVO_API_KEY ?? ''
     },
     body: JSON.stringify({
       sender: { name: 'SecureID', email: 'nc.equipo21@gmail.com' },

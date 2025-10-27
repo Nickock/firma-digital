@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm'
+import { QueryFailedError, Repository } from 'typeorm'
 import { AppDataSource } from '../../db/connect'
 import { User } from '../../entities/User.entity'
 import {
@@ -136,7 +136,7 @@ class UserService {
 
       return { data: data }
     } catch (error) {
-      if (error.code && error.code == '23505') {
+      if (error instanceof QueryFailedError && error.driverError.code == '23505') {
         return { error: 'Ya existe un usuario registrado con ese dni' }
       }
 
