@@ -17,7 +17,7 @@ export const SignDocument = () => {
   const { sendSignatureDocument, isLoading } = useUser()
   const [returnUrl, setreturnUrl] = useState<string | undefined>()
   const [noPendingSign, setNoPendingSign] = useState(false)
-
+  console.log(signId)
   //Obtiene el id de la signRequest (el guardado y/o el recibido por searchParams) y hace fetch signData
   useEffect(() => {
     const fetchSignData = async () => {
