@@ -1,13 +1,19 @@
-import { Router } from 'express';
-import { HttpStatus, UserStatus } from '../../constants/enums';
-import apiResponse from '../../utils/apiResponse';
-import { SignController } from './controller';
-import { validateSchema } from '../../utils/validateSchema';
-import { signDocumentSchema } from '../../schemas/SignSchema';
-import { statusMiddleware } from '../../middlewares/statusMiddleware';
-export const signRouter = Router();
-signRouter.post('/', statusMiddleware([UserStatus.COMPLETED]), async (req, res) => {
-    const body = validateSchema(req.body, signDocumentSchema);
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.signRouter = void 0;
+const express_1 = require("express");
+const enums_1 = require("../../constants/enums");
+const apiResponse_1 = __importDefault(require("../../utils/apiResponse"));
+const controller_1 = require("./controller");
+const validateSchema_1 = require("../../utils/validateSchema");
+const SignSchema_1 = require("../../schemas/SignSchema");
+const statusMiddleware_1 = require("../../middlewares/statusMiddleware");
+exports.signRouter = (0, express_1.Router)();
+exports.signRouter.post('/', (0, statusMiddleware_1.statusMiddleware)([enums_1.UserStatus.COMPLETED]), async (req, res) => {
+    const body = (0, validateSchema_1.validateSchema)(req.body, SignSchema_1.signDocumentSchema);
     if (!body.success) {
         let errorMessage;
         if (body.error) {
@@ -24,13 +30,14 @@ signRouter.post('/', statusMiddleware([UserStatus.COMPLETED]), async (req, res) 
         else {
             errorMessage = 'Verifica tu información';
         }
-        return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, JSON.parse(errorMessage)));
+        return res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, JSON.parse(errorMessage)));
     }
     const userId = res.locals.user.id;
-    const response = await SignController.signDocument(userId, body.data?.signRequestId);
+    const response = await controller_1.SignController.signDocument(userId, body.data?.signRequestId);
     if (response.error) {
-        return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, response));
+        return res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, response));
     }
-    return res.status(HttpStatus.OK).json(apiResponse(true, response));
+    return res.status(enums_1.HttpStatus.OK).json((0, apiResponse_1.default)(true, response));
     //   res.status(HttpStatus.OK).json(apiResponse(true, { message: 'sign router ok' }))
 });
+//# sourceMappingURL=router.js.map

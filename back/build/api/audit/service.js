@@ -1,8 +1,10 @@
-import { AuditLog } from '../../entities/AuditLog.entity';
-import { AppDataSource } from '../../db/connect';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const AuditLog_entity_1 = require("../../entities/AuditLog.entity");
+const connect_1 = require("../../db/connect");
 class AuditLogService {
     constructor() {
-        this.auditLogRepo = AppDataSource.getRepository(AuditLog);
+        this.auditLogRepo = connect_1.AppDataSource.getRepository(AuditLog_entity_1.AuditLog);
     }
     async create(userId, action) {
         try {
@@ -17,4 +19,5 @@ class AuditLogService {
         }
     }
 }
-export default new AuditLogService();
+exports.default = new AuditLogService();
+//# sourceMappingURL=service.js.map

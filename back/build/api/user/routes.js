@@ -1,103 +1,110 @@
-import { Router } from 'express';
-import apiResponse from '../../utils/apiResponse';
-import { validateSchema } from '../../utils/validateSchema';
-import { signHashSchema, updateUserSchema, verifyEmailSchema } from '../../schemas/UserSchemas';
-import { HttpStatus, UserStatus } from '../../constants/enums';
-import UserController from './controller';
-import { statusMiddleware } from '../../middlewares/statusMiddleware';
-export const userRouter = Router();
-userRouter.get('/', async (req, res) => {
-    const response = await UserController.getUser(res.locals.user.id);
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRouter = void 0;
+const express_1 = require("express");
+const apiResponse_1 = __importDefault(require("../../utils/apiResponse"));
+const validateSchema_1 = require("../../utils/validateSchema");
+const UserSchemas_1 = require("../../schemas/UserSchemas");
+const enums_1 = require("../../constants/enums");
+const controller_1 = __importDefault(require("./controller"));
+const statusMiddleware_1 = require("../../middlewares/statusMiddleware");
+exports.userRouter = (0, express_1.Router)();
+exports.userRouter.get('/', async (req, res) => {
+    const response = await controller_1.default.getUser(res.locals.user.id);
     // const response = await UserController.getUser('4e635394-a219-4eb6-a5cc-a45ff30bd3bc')
     if (response.error) {
-        res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, response));
+        res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, response));
     }
-    res.status(HttpStatus.OK).json(apiResponse(true, { ...response.data }));
+    res.status(enums_1.HttpStatus.OK).json((0, apiResponse_1.default)(true, { ...response.data }));
 });
-userRouter.post('/verifyEmail/code', statusMiddleware([UserStatus.CREATED]), async (req, res) => {
+exports.userRouter.post('/verifyEmail/code', (0, statusMiddleware_1.statusMiddleware)([enums_1.UserStatus.CREATED]), async (req, res) => {
     try {
         const userId = res.locals.user.userId;
-        const response = await UserController.generateNewVerifyCode(userId);
+        const response = await controller_1.default.generateNewVerifyCode(userId);
         if (!response.success) {
             return res
-                .status(HttpStatus.BAD_REQUEST)
-                .json(apiResponse(false, { error: 'No se pudo completar su solicitud.' }));
+                .status(enums_1.HttpStatus.BAD_REQUEST)
+                .json((0, apiResponse_1.default)(false, { error: 'No se pudo completar su solicitud.' }));
         }
         return res
-            .status(HttpStatus.OK)
-            .json(apiResponse(true, { message: 'Se ha enviado un correo con su nuevo código.' }));
+            .status(enums_1.HttpStatus.OK)
+            .json((0, apiResponse_1.default)(true, { message: 'Se ha enviado un correo con su nuevo código.' }));
     }
     catch (error) {
         console.error('ERROR'.bgRed, error);
-        return res.status(HttpStatus.SERVER_ERROR).json(apiResponse(false, { message: 'Error del servidor' }));
+        return res.status(enums_1.HttpStatus.SERVER_ERROR).json((0, apiResponse_1.default)(false, { message: 'Error del servidor' }));
     }
 });
-userRouter.post('/verifyEmail', statusMiddleware([UserStatus.CREATED]), async (req, res) => {
+exports.userRouter.post('/verifyEmail', (0, statusMiddleware_1.statusMiddleware)([enums_1.UserStatus.CREATED]), async (req, res) => {
     try {
-        const body = validateSchema(req.body, verifyEmailSchema);
+        const body = (0, validateSchema_1.validateSchema)(req.body, UserSchemas_1.verifyEmailSchema);
         if (!body.success) {
-            return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, { error: 'codigo inválido' }));
+            return res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, { error: 'codigo inválido' }));
         }
         const verifyCode = body.data?.verifyCode;
         const userId = res.locals.user.id;
-        const response = await UserController.verifyEmail(userId, verifyCode || '');
+        const response = await controller_1.default.verifyEmail(userId, verifyCode || '');
         if (response.success) {
             return res
-                .status(HttpStatus.OK)
-                .json(apiResponse(true, { message: 'Su email ha sido verificado satisfactoriamente.' }));
+                .status(enums_1.HttpStatus.OK)
+                .json((0, apiResponse_1.default)(true, { message: 'Su email ha sido verificado satisfactoriamente.' }));
         }
-        return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, { error: 'Ha introducido un código inválido.' }));
+        return res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, { error: 'Ha introducido un código inválido.' }));
     }
     catch (err) {
         console.error('ERROR'.bgRed, err);
-        return res.status(HttpStatus.SERVER_ERROR).json(apiResponse(false, { error: 'Error del servidor' }));
+        return res.status(enums_1.HttpStatus.SERVER_ERROR).json((0, apiResponse_1.default)(false, { error: 'Error del servidor' }));
     }
 });
-userRouter.patch('/', statusMiddleware([UserStatus.EMAIL_VERIFIED, UserStatus.DATA_UPLOAD, UserStatus.AUNTENTIFIED, UserStatus.COMPLETED]), async (req, res) => {
+exports.userRouter.patch('/', (0, statusMiddleware_1.statusMiddleware)([enums_1.UserStatus.EMAIL_VERIFIED, enums_1.UserStatus.DATA_UPLOAD, enums_1.UserStatus.AUNTENTIFIED, enums_1.UserStatus.COMPLETED]), async (req, res) => {
     // try {
-    const body = validateSchema(req.body, updateUserSchema);
+    const body = (0, validateSchema_1.validateSchema)(req.body, UserSchemas_1.updateUserSchema);
     if (!body.success) {
         console.log(body.error);
-        return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, JSON.parse(body.error?.message ?? '')));
+        return res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, JSON.parse(body.error?.message ?? '')));
     }
-    const response = await UserController.updateUser(res.locals.user.id, body.data);
+    const response = await controller_1.default.updateUser(res.locals.user.id, body.data);
     console.log(response);
     if (response.error) {
-        return res.status(HttpStatus.CONFLICT).json(apiResponse(false, response));
+        return res.status(enums_1.HttpStatus.CONFLICT).json((0, apiResponse_1.default)(false, response));
     }
     return res
-        .status(HttpStatus.CREATED)
-        .json(apiResponse(true, { message: 'Usuario actualizado correctmente', data: body.data }));
+        .status(enums_1.HttpStatus.CREATED)
+        .json((0, apiResponse_1.default)(true, { message: 'Usuario actualizado correctmente', data: body.data }));
     // } catch (err) {
     //   console.error('ERROR'.bgRed)
     //   console.error(err)
     //   res.status(HttpStatus.SERVER_ERROR).json(apiResponse(false, { error: 'Error del servidor' }))
     // }
 });
-userRouter.get('/status', async (req, res) => {
-    const response = await UserController.getUserStatus(res.locals.user.id);
+exports.userRouter.get('/status', async (req, res) => {
+    const response = await controller_1.default.getUserStatus(res.locals.user.id);
     if (response.error) {
-        res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, response));
+        res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, response));
     }
-    res.status(HttpStatus.OK).json(apiResponse(true, { ...response }));
+    res.status(enums_1.HttpStatus.OK).json((0, apiResponse_1.default)(true, { ...response }));
     // res.status(200).json(apiResponse(true, { message: 'tuki' }))
 });
-userRouter.patch('/autentify', statusMiddleware([UserStatus.DATA_UPLOAD]), async (req, res) => {
-    const response = await UserController.addBiometricData(res.locals.user.id);
+exports.userRouter.patch('/autentify', (0, statusMiddleware_1.statusMiddleware)([enums_1.UserStatus.DATA_UPLOAD]), async (req, res) => {
+    const response = await controller_1.default.addBiometricData(res.locals.user.id);
     if (response.error) {
-        res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, { ...response }));
+        res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, { ...response }));
     }
-    res.status(HttpStatus.OK).json(apiResponse(true, { ...response }));
+    res.status(enums_1.HttpStatus.OK).json((0, apiResponse_1.default)(true, { ...response }));
 });
-userRouter.patch('/sign', statusMiddleware([UserStatus.AUNTENTIFIED]), async (req, res) => {
-    const body = validateSchema(req.body, signHashSchema);
+exports.userRouter.patch('/sign', (0, statusMiddleware_1.statusMiddleware)([enums_1.UserStatus.AUNTENTIFIED]), async (req, res) => {
+    const body = (0, validateSchema_1.validateSchema)(req.body, UserSchemas_1.signHashSchema);
     if (!body.success || body.data == undefined) {
         console.log(body.error);
-        return res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, JSON.parse(body.error?.message ?? '')));
+        return res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, JSON.parse(body.error?.message ?? '')));
     }
-    const response = await UserController.addSignHash(res.locals.user.id, body.data);
+    const response = await controller_1.default.addSignHash(res.locals.user.id, body.data);
     if (response.error) {
-        res.status(HttpStatus.BAD_REQUEST).json(apiResponse(false, response));
+        res.status(enums_1.HttpStatus.BAD_REQUEST).json((0, apiResponse_1.default)(false, response));
     }
-    res.status(HttpStatus.OK).json(apiResponse(true, response));
+    res.status(enums_1.HttpStatus.OK).json((0, apiResponse_1.default)(true, response));
 });
+//# sourceMappingURL=routes.js.map

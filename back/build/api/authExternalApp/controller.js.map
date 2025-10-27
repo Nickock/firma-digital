@@ -1,0 +1,1 @@
+{"version":3,"file":"controller.js","sourceRoot":"","sources":["../../../src/api/authExternalApp/controller.ts"],"names":[],"mappings":";;;;;;AAEA,wDAA8C;AAE9C,MAAa,yBAAyB;IACpC,MAAM,CAAC,KAAK,CAAC,WAAW,CAAC,OAAgC;QACvD,OAAO,MAAM,iBAAsB,CAAC,QAAQ,CAAC,OAAO,CAAC,CAAA;IACvD,CAAC;CACF;AAJD,8DAIC"}

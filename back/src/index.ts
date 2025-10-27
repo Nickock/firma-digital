@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import 'colors'
-import './db/connect'
+// import './db/connect'
 import { AppDataSource } from './db/connect'
 import { apiRouter } from './routers/routers'
 const PORT = process.env.PORT
@@ -51,7 +51,7 @@ async function main() {
   }
 }
 
-await main()
+main()
 
 // Solo para pruebas durante desarrollo:
 import './auxiliar'

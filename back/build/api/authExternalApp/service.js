@@ -1,9 +1,14 @@
-import { ExternalApp } from '../../entities/ExternalApp.entity';
-import { AppDataSource } from '../../db/connect';
-import crypto from 'crypto';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const ExternalApp_entity_1 = require("../../entities/ExternalApp.entity");
+const connect_1 = require("../../db/connect");
+const crypto_1 = __importDefault(require("crypto"));
 class AuthExternalAppService {
     constructor() {
-        this.externalAppRepo = AppDataSource.getRepository(ExternalApp);
+        this.externalAppRepo = connect_1.AppDataSource.getRepository(ExternalApp_entity_1.ExternalApp);
     }
     async register(payload) {
         const extAppExist = await this.externalAppRepo.exists({ where: { email: payload.email } });
@@ -20,7 +25,8 @@ class AuthExternalAppService {
         return { apiKey: newAppKey };
     }
 }
-export default new AuthExternalAppService();
+exports.default = new AuthExternalAppService();
 function generateAPIKey(length = 32) {
-    return crypto.randomBytes(length).toString('base64url');
+    return crypto_1.default.randomBytes(length).toString('base64url');
 }
+//# sourceMappingURL=service.js.map

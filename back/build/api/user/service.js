@@ -1,18 +1,23 @@
-import { QueryFailedError } from 'typeorm';
-import { AppDataSource } from '../../db/connect';
-import { User } from '../../entities/User.entity';
-import { UserStatus } from '../../constants/enums';
-import { AuditLogActions } from '../../constants/enums';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const typeorm_1 = require("typeorm");
+const connect_1 = require("../../db/connect");
+const User_entity_1 = require("../../entities/User.entity");
+const enums_1 = require("../../constants/enums");
+const enums_2 = require("../../constants/enums");
 // import AuditLogService from '../audit/service'
-import AuditLogController from '../audit/controller';
-import verifyEmailCode from '../../utils/verifyEmailCode';
-import { sendEmail } from '../../services/mailService';
-import { UserKey } from '../../entities/UserKey.entity';
-import CryptoKey from '../../utils/keyUtils';
+const controller_1 = __importDefault(require("../audit/controller"));
+const verifyEmailCode_1 = __importDefault(require("../../utils/verifyEmailCode"));
+const mailService_1 = require("../../services/mailService");
+const UserKey_entity_1 = require("../../entities/UserKey.entity");
+const keyUtils_1 = __importDefault(require("../../utils/keyUtils"));
 class UserService {
     constructor() {
-        this.userRepo = AppDataSource.getRepository(User);
-        this.userKeyRepo = AppDataSource.getRepository(UserKey);
+        this.userRepo = connect_1.AppDataSource.getRepository(User_entity_1.User);
+        this.userKeyRepo = connect_1.AppDataSource.getRepository(UserKey_entity_1.UserKey);
     }
     async getUserById(idUser) {
         try {
@@ -68,14 +73,14 @@ class UserService {
             if (!user) {
                 return { success: false };
             }
-            if (user.verificationEmailCode != payload.verificationCode || user.status != UserStatus.CREATED) {
+            if (user.verificationEmailCode != payload.verificationCode || user.status != enums_1.UserStatus.CREATED) {
                 return { success: false };
             }
-            user.status = UserStatus.EMAIL_VERIFIED;
+            user.status = enums_1.UserStatus.EMAIL_VERIFIED;
             this.userRepo.save(user);
             //Audit log
             try {
-                await AuditLogController.create(payload.userId, AuditLogActions.EMAIL_VERIFICATION);
+                await controller_1.default.create(payload.userId, enums_2.AuditLogActions.EMAIL_VERIFICATION);
             }
             catch {
                 console.error('No se pudo crear el auditLog de verificacion de email'.bgYellow);
@@ -102,11 +107,11 @@ class UserService {
             user.birthDate = new Date(data.birthDate);
             user.dni = data.dni;
             user.phone = data.phone ?? '';
-            user.status = UserStatus.DATA_UPLOAD;
+            user.status = enums_1.UserStatus.DATA_UPLOAD;
             await this.userRepo.save(user);
             //Audit log
             try {
-                await AuditLogController.create(userId, AuditLogActions.USER_DATA_UPDATED);
+                await controller_1.default.create(userId, enums_2.AuditLogActions.USER_DATA_UPDATED);
             }
             catch {
                 console.error('No se pudo crear el auditLog de actualizacion de usuario'.bgYellow);
@@ -114,7 +119,7 @@ class UserService {
             return { data: data };
         }
         catch (error) {
-            if (error instanceof QueryFailedError && error.driverError.code == '23505') {
+            if (error instanceof typeorm_1.QueryFailedError && error.driverError.code == '23505') {
                 return { error: 'Ya existe un usuario registrado con ese dni' };
             }
             if (error instanceof Error) {
@@ -131,13 +136,13 @@ class UserService {
                 return { error: 'El usuario que intentas actualizar, no existe' };
             }
             // console.log('[DEV]:No olvides activar esta linea al terminar'.bgCyan.red)
-            user.status = UserStatus.COMPLETED;
+            user.status = enums_1.UserStatus.COMPLETED;
             user.signHash = data.signHash;
             //CREAR FIRMA DIGITAL Y SOLO ACTUALIZAR SI LA FIRMA ESTÁ OK
-            const { publicKey, privateKey } = CryptoKey.generateRSAKeyPair();
+            const { publicKey, privateKey } = keyUtils_1.default.generateRSAKeyPair();
             //      const publicKey = 'Public key de pruebas'
             //      const privateKey = 'Private key de pruebas'
-            const { encrypted: private_key_hash, iv } = await CryptoKey.encryptWithHash(privateKey, data.signHash);
+            const { encrypted: private_key_hash, iv } = await keyUtils_1.default.encryptWithHash(privateKey, data.signHash);
             const userKey = this.userKeyRepo.create({
                 public_key: publicKey,
                 private_key_encrypted: private_key_hash,
@@ -149,7 +154,7 @@ class UserService {
             await this.userRepo.save(user);
             //Audit log
             try {
-                await AuditLogController.create(userId, AuditLogActions.USER_COMPLETED);
+                await controller_1.default.create(userId, enums_2.AuditLogActions.USER_COMPLETED);
             }
             catch {
                 console.error('No se pudo crear el auditLog de actualizacion de usuario'.bgYellow);
@@ -169,7 +174,7 @@ class UserService {
             if (!user) {
                 return { success: false };
             }
-            const newCode = verifyEmailCode();
+            const newCode = (0, verifyEmailCode_1.default)();
             user.verificationEmailCode = newCode;
             await this.userRepo.save(user);
             //Enviar nuevo email
@@ -178,7 +183,7 @@ class UserService {
                 messages: ['Tu nuevo codigo de verificación es :', newCode]
             };
             const subject = '¡Tu nuevo codigo de verificación de email está listo!';
-            await sendEmail(user.email, newMail, subject);
+            await (0, mailService_1.sendEmail)(user.email, newMail, subject);
             return { success: true };
         }
         catch (error) {
@@ -193,11 +198,11 @@ class UserService {
             if (!user) {
                 return { error: 'El usuario que intentas actualizar, no existe' };
             }
-            user.status = UserStatus.AUNTENTIFIED;
+            user.status = enums_1.UserStatus.AUNTENTIFIED;
             await this.userRepo.save(user);
             //Audit log
             try {
-                await AuditLogController.create(userId, AuditLogActions.USER_AUNTENTIFIED);
+                await controller_1.default.create(userId, enums_2.AuditLogActions.USER_AUNTENTIFIED);
             }
             catch {
                 console.error('No se pudo crear el auditLog de actualizacion de usuario'.bgYellow);
@@ -212,4 +217,5 @@ class UserService {
         }
     }
 }
-export default new UserService();
+exports.default = new UserService();
+//# sourceMappingURL=service.js.map

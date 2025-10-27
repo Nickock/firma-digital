@@ -1,6 +1,13 @@
-import AuditLogService from './service';
-export default class AuditLogController {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const service_1 = __importDefault(require("./service"));
+class AuditLogController {
     static async create(userId, action) {
-        return AuditLogService.create(userId, action);
+        return service_1.default.create(userId, action);
     }
 }
+exports.default = AuditLogController;
+//# sourceMappingURL=controller.js.map

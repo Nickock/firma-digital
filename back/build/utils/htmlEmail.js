@@ -1,4 +1,8 @@
-export default function htmlEmail(data) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.htmlWelcomeEmail = void 0;
+exports.default = htmlEmail;
+function htmlEmail(data) {
     console.log(data);
     return `<!DOCTYPE html>
 <html lang="es">
@@ -185,7 +189,7 @@ export default function htmlEmail(data) {
 </html>
 `;
 }
-export const htmlWelcomeEmail = (user = 'Usuario', code = '123-456-789') => {
+const htmlWelcomeEmail = (user = 'Usuario', code = '123-456-789') => {
     return `<!DOCTYPE html>
 <html lang="es">
   <head>
@@ -608,3 +612,5 @@ export const htmlWelcomeEmail = (user = 'Usuario', code = '123-456-789') => {
 </html>
     `;
 };
+exports.htmlWelcomeEmail = htmlWelcomeEmail;
+//# sourceMappingURL=htmlEmail.js.map

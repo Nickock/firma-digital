@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,29 +8,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
-import { BaseEntity } from './BaseEntity';
-import { User } from './User.entity';
-let UserKey = class UserKey extends BaseEntity {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserKey = void 0;
+const typeorm_1 = require("typeorm");
+const BaseEntity_1 = require("./BaseEntity");
+const User_entity_1 = require("./User.entity");
+let UserKey = class UserKey extends BaseEntity_1.BaseEntity {
 };
+exports.UserKey = UserKey;
 __decorate([
-    Column({ type: 'varchar' }),
+    (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
 ], UserKey.prototype, "private_key_encrypted", void 0);
 __decorate([
-    Column({ type: 'varchar' }),
+    (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
 ], UserKey.prototype, "public_key", void 0);
 __decorate([
-    Column({ type: 'varchar' }),
+    (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
 ], UserKey.prototype, "encryptionIv", void 0);
 __decorate([
-    OneToOne(() => User, (user) => user.userKey),
-    JoinColumn(),
-    __metadata("design:type", User)
+    (0, typeorm_1.OneToOne)(() => User_entity_1.User, (user) => user.userKey),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", User_entity_1.User)
 ], UserKey.prototype, "user", void 0);
-UserKey = __decorate([
-    Entity()
+exports.UserKey = UserKey = __decorate([
+    (0, typeorm_1.Entity)()
 ], UserKey);
-export { UserKey };
+//# sourceMappingURL=UserKey.entity.js.map

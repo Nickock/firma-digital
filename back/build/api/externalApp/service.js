@@ -1,11 +1,13 @@
-import { QueryFailedError } from 'typeorm';
-import { ExternalApp } from '../../entities/ExternalApp.entity';
-import { AppDataSource } from '../../db/connect';
-import { SignRequest } from '../../entities/SignRequest.entity';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const typeorm_1 = require("typeorm");
+const ExternalApp_entity_1 = require("../../entities/ExternalApp.entity");
+const connect_1 = require("../../db/connect");
+const SignRequest_entity_1 = require("../../entities/SignRequest.entity");
 class ExternalAppService {
     constructor() {
-        this.externalAppRepo = AppDataSource.getRepository(ExternalApp);
-        this.signRequestRepo = AppDataSource.getRepository(SignRequest);
+        this.externalAppRepo = connect_1.AppDataSource.getRepository(ExternalApp_entity_1.ExternalApp);
+        this.signRequestRepo = connect_1.AppDataSource.getRepository(SignRequest_entity_1.SignRequest);
     }
     async existByKey(apiKey) {
         try {
@@ -43,7 +45,7 @@ class ExternalAppService {
             return { requestId: response.id };
         }
         catch (error) {
-            if (error instanceof QueryFailedError && error.driverError.code == '23505') {
+            if (error instanceof typeorm_1.QueryFailedError && error.driverError.code == '23505') {
                 return { error: 'Ya existe una solicitud de firma para este documento' };
             }
             console.error('ERROR [ExternalAppService:createSignRequest]'.bgRed);
@@ -76,4 +78,5 @@ class ExternalAppService {
         }
     }
 }
-export default new ExternalAppService();
+exports.default = new ExternalAppService();
+//# sourceMappingURL=service.js.map

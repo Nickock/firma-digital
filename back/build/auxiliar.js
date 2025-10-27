@@ -22,3 +22,4 @@ console.log('AUXILIAR.TS BEGIN'.bgCyan);
 // )
 // console.log('FIRMA VALIDA : ' + isValid)
 console.log('AUXILIAR.TS END'.bgCyan);
+//# sourceMappingURL=auxiliar.js.map
