@@ -119,6 +119,10 @@ async function sendExternalAppSignaturePackage(
       body: JSON.stringify(signaturePackage)
     })
 
+    console.log('RESPONSE  = ', response)
+    const data = await response.json()
+    console.log('DATA = ', data)
+
     return { success: response.ok }
   } catch (error) {
     console.error('Error sending signPackage to external app'.bgRed)
