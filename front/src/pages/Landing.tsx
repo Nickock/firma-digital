@@ -1,11 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/ui/button'
 import { IoShieldOutline, IoFingerPrintOutline, IoKeyOutline } from 'react-icons/io5'
 export const Landing = () => {
+  const navigate = useNavigate()
   return (
     <>
       <div
         style={{
-          background: 'url("public/landingBg2.webp")',
+          background: 'url("./landingBg2.webp")',
           backgroundPosition: 'center',
           backgroundSize: 'cover'
         }}
@@ -15,7 +17,9 @@ export const Landing = () => {
         <p className='my-10 text-xl'>
           SecureID te provee de una plataforma robusta y de uso amigable para administrar tu identidad digital.
         </p>
-        <Button variant={'secondary'}>Comenzar ahora</Button>
+        <Button variant={'secondary'} onClick={() => navigate('/panel')}>
+          Comenzar ahora
+        </Button>
       </div>
       <h2 className='text-3xl font-medium my-3'>Caracteristicas principales</h2>
       <p className='mb-7'>
@@ -54,7 +58,7 @@ export const Landing = () => {
           Únete a miles de usuarios que confían en SecureID para gestionar su presencia en línea de forma segura y
           eficiente.
         </p>
-        <Button>Comenzar</Button>
+        <Button onClick={() => navigate('/panel')}>Comenzar</Button>
       </div>
     </>
   )

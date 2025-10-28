@@ -14,7 +14,7 @@ export const Header = () => {
   return (
     <header className='border-b-1 h-15 items-center border-[var(--primary)] py-3 justify-between flex px-5 bg-[rgba(0,0,0,.4)]'>
       <Link to='/' className='flex gap-3 items-center'>
-        <img src='vite.svg' alt='' />
+        <img src='./favicon.png' alt='' className='max-w-[30px]' />
         <h1 className='text-xl font-medium'>SecureID</h1>
       </Link>
       {!token ? (
