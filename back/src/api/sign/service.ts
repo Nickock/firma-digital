@@ -125,8 +125,13 @@ async function sendExternalAppSignaturePackage(
 
     return { success: response.ok }
   } catch (error) {
-    console.error('Error sending signPackage to external app'.bgRed)
-    console.error(error)
+    if (error instanceof Error) {
+      console.log(`MENSAJE ERROR = ${error.message}`.bgCyan)
+      console.log(`${error}`.bgMagenta)
+    } else {
+      console.error('Error sending signPackage to external app'.bgRed)
+      console.error(error)
+    }
 
     return { success: false }
   }
