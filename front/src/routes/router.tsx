@@ -56,18 +56,22 @@ export const mainRouter = createBrowserRouter([
           </BasicLayout>
         )
       },
-      {
-        path: '/panel',
-        element: <BasicLayout />,
-        children: [
-          { index: true, element: <UserPanel /> },
+      // {
+      //   path: '/panel',
+      //   element: <BasicLayout />,
+      //   children: [
+          
+          
+      //     el /> },
+          
+      //   ]
+      // },
+      { path: "/panel/", element:  <BasicLayout ><UserPanel /></BasicLayout> },
+      { path: '/panel/perfil', element: <BasicLayout> <UserProfile /> </BasicLayout>},
+      { path: '/panel/datos-biometricos', element: <BasicLayout><BiometricDataPanel/></BasicLayout> },
+      { path: '/panel/adjunta-firma', element: <BasicLayout><AddDigitalSign /></BasicLayout> },
+      { path: '/panel/firmar-documento', element: <BasicLayout ><SignDocument /></BasicLayout> }
 
-          { path: 'perfil', element: <UserProfile /> },
-          { path: 'datos-biometricos', element: <BiometricDataPanel /> },
-          { path: 'adjunta-firma', element: <AddDigitalSign /> },
-          { path: 'firmar-documento', element: <SignDocument /> }
-        ]
-      }
     ]
   }
 ])
