@@ -6,11 +6,15 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../components/ui/button'
 import { useNavigate } from 'react-router-dom'
+import { ImSpinner8 } from 'react-icons/im'
+
 export const UserProfile = () => {
   const { getProfileData, updateProfileData } = useUser()
   const [userData, setUserData] = useState<userDataFormData>()
   const [confirmDialog, setConfirmDialog] = useState(false)
   const [dataToSend, setDataToSend] = useState<userDataFormData>()
+  const [isLoading, setIsLoading] = useState(true)
+
   const navigate = useNavigate()
 
   const {
@@ -27,6 +31,7 @@ export const UserProfile = () => {
   //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
+      setIsLoading(true)
       try {
         const result = await getProfileData()
         if ('error' in result.payload) throw new Error()
@@ -46,6 +51,8 @@ export const UserProfile = () => {
           duration: 4000
         })
         console.error(err)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -78,7 +85,10 @@ export const UserProfile = () => {
 
   return (
     <div>
-      <h3 className='text-4xl mt-15'>Mi perfil</h3>
+      <div className='flex gap-3 items-center mt-15'>
+        <h3 className='text-4xl '>Mi perfil</h3>
+        {isLoading && <ImSpinner8 className='text-4xl animate-spin' />}
+      </div>
       <form className='grid grid-cols-1 sm:grid-cols-2 gap-5 p-10' onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col gap-2 col-span-1'>
           <label>Nombre</label>
