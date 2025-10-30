@@ -1,1 +1,0 @@
-{"version":3,"file":"controller.js","sourceRoot":"","sources":["../../../src/api/sign/controller.ts"],"names":[],"mappings":";;;;;;AAEA,wDAAmC;AAEnC,MAAa,cAAc;IACzB,MAAM,CAAC,KAAK,CAAC,YAAY,CAAC,MAAc,EAAE,aAAqB;QAC7D,OAAO,iBAAW,CAAC,IAAI,CAAC,MAAM,EAAE,aAAa,CAAC,CAAA;IAChD,CAAC;CACF;AAJD,wCAIC"}
