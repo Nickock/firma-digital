@@ -10,7 +10,9 @@ export default class AuthController {
       const payload: IRegisterPayload = { email, pass }
 
       return await AuthService.register(payload)
-    } catch {
+    } catch (error) {
+      console.error('[Auth Controller] : Register'.bgRed)
+      console.error(error)
       return { token: '', error: 'Error del servidor' }
     }
   }
@@ -19,7 +21,9 @@ export default class AuthController {
     try {
       const payload: IRegisterPayload = { email, pass }
       return await AuthService.login(payload)
-    } catch {
+    } catch (error) {
+      console.error('[Auth Controller] : Login'.bgRed)
+      console.error(error)
       return { token: '', error: 'Error del servidor' }
     }
   }

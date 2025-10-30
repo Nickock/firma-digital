@@ -5,6 +5,7 @@ import { Button } from '../components/ui/button'
 import { useSign } from '../hooks/useSign'
 import { toast } from 'sonner'
 import { useUser } from '../hooks/useUser'
+import { ImSpinner8 } from 'react-icons/im'
 
 export const SignDocument = () => {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ export const SignDocument = () => {
   const { sendSignatureDocument, isLoading } = useUser()
   const [returnUrl, setreturnUrl] = useState<string | undefined>()
   const [noPendingSign, setNoPendingSign] = useState(false)
-  console.log(signId)
+
   //Obtiene el id de la signRequest (el guardado y/o el recibido por searchParams) y hace fetch signData
   useEffect(() => {
     const fetchSignData = async () => {
@@ -56,7 +57,7 @@ export const SignDocument = () => {
         duration: 4000
       })
     } else {
-      setreturnUrl(response.payload.return_url)
+      setreturnUrl(`${response.payload.return_url}?success=${response.payload.external_success}`)
 
       toast.success('¡Hecho!', {
         style: { borderColor: '#3cbb38ff', backgroundColor: '#f5fff1ff', borderWidth: '2px' },
@@ -93,20 +94,26 @@ export const SignDocument = () => {
     <div>
       {returnUrl == undefined ? (
         <div className='flex flex-col gap-5 text-xl  mx-auto items-center my-10'>
-          <h3 className='text-4xl mb-10 self-start'>Firma el documento:</h3>
-          {signData && <p> Descripción : {signData.description}</p>}
-          {signData && (
-            <a
-              href={signData.doc_url}
-              target='_blank'
-              className='text-blue-500 underline hover:text-blue-300 duration-150'
-            >
-              Previsualizar documento
-            </a>
+          <h3 className='text-4xl mb-10 self-start text-[var(--secondary)]'>Firma el documento:</h3>
+          {signData ? (
+            <>
+              <p> Descripción : {signData.description}</p>
+              <a
+                href={signData.doc_url}
+                target='_blank'
+                className='text-blue-500 underline hover:text-blue-300 duration-150'
+              >
+                Previsualizar documento
+              </a>
+              <Button onClick={() => setConfirmDialog(true)} disabled={isLoading}>
+                Firmar
+              </Button>
+            </>
+          ) : (
+            <>
+              <ImSpinner8 className='text-8xl my-5 animate-spin text-[var(--secondary)]' />
+            </>
           )}
-          <Button onClick={() => setConfirmDialog(true)} disabled={isLoading}>
-            Firmar
-          </Button>
         </div>
       ) : (
         <div className='flex flex-col items-center mt-15 '>
