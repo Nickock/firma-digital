@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../hooks/useUser'
 import { toast } from 'sonner'
-import { ImSpinner8 } from 'react-icons/im'
+import { ImSpinner8, ImCheckmark } from 'react-icons/im'
 
 export const UserPanel = () => {
   const navigate = useNavigate()
@@ -85,12 +85,14 @@ export const UserPanel = () => {
             {userStep < 5 ? (
               <div>
                 <div className='relative'>
-                  {userStep >= 1 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+                  {/* {userStep >= 1 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>} */}
                   <p className='text-2xl flex items-center justify-between gap-15 '>
                     <span className='text-8xl text-gradient '>1</span>
                     Crear tu cuenta
                     {userStep >= 1 ? (
-                      <span>Listo.</span>
+                      <span className='text-[var(--primary)] text-4xl'>
+                        <ImCheckmark />
+                      </span>
                     ) : (
                       <Button
                         onClick={() => {
@@ -103,74 +105,106 @@ export const UserPanel = () => {
                   </p>
                 </div>
                 <div className='relative'>
-                  {userStep >= 2 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+                  {/* {userStep >= 2 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>} */}
                   <p className='text-2xl flex items-center justify-between gap-15 '>
                     <span className='text-8xl text-gradient '>2</span>
                     Verificar tu correo
                     {userStep >= 2 ? (
-                      <span>Listo.</span>
+                      <span className='text-[var(--primary)] text-4xl'>
+                        <ImCheckmark />
+                      </span>
                     ) : (
-                      <Button
-                        onClick={() => {
-                          navigateToStep(2)
-                        }}
-                      >
-                        Pendiente
-                      </Button>
+                      <span>
+                        {userStep == 1 ? (
+                          <Button
+                            onClick={() => {
+                              navigateToStep(5)
+                            }}
+                          >
+                            Pendiente
+                          </Button>
+                        ) : (
+                          <Button disabled={true}>No disponible</Button>
+                        )}
+                      </span>
                     )}
                   </p>
                 </div>
                 <div className='relative'>
-                  {userStep >= 3 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+                  {/* {userStep >= 3 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>} */}
                   <p className='text-2xl flex items-center justify-between gap-15 '>
                     <span className='text-8xl text-gradient '>3</span>
                     Adjuntar tus datos personales
                     {userStep >= 3 ? (
-                      <span>Listo.</span>
+                      <span className='text-[var(--primary)] text-4xl'>
+                        <ImCheckmark />
+                      </span>
                     ) : (
-                      <Button
-                        onClick={() => {
-                          navigateToStep(3)
-                        }}
-                      >
-                        Pendiente
-                      </Button>
+                      <span>
+                        {userStep == 2 ? (
+                          <Button
+                            onClick={() => {
+                              navigateToStep(3)
+                            }}
+                          >
+                            Pendiente
+                          </Button>
+                        ) : (
+                          <Button disabled={true}>No disponible</Button>
+                        )}
+                      </span>
                     )}
                   </p>
                 </div>
                 <div className='relative'>
-                  {userStep >= 4 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+                  {/* {userStep >= 4 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>} */}
                   <p className='text-2xl flex items-center justify-between gap-15 '>
                     <span className='text-8xl text-gradient '>4</span>
                     Datos biométricos
                     {userStep >= 4 ? (
-                      <span>Listo.</span>
+                      <span className='text-[var(--primary)] text-4xl'>
+                        <ImCheckmark />
+                      </span>
                     ) : (
-                      <Button
-                        onClick={() => {
-                          navigateToStep(4)
-                        }}
-                      >
-                        Pendiente
-                      </Button>
+                      <span>
+                        {userStep == 3 ? (
+                          <Button
+                            onClick={() => {
+                              navigateToStep(4)
+                            }}
+                          >
+                            Pendiente
+                          </Button>
+                        ) : (
+                          <Button disabled={true}>No disponible</Button>
+                        )}
+                      </span>
                     )}
                   </p>
                 </div>
                 <div className='relative'>
-                  {userStep >= 5 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>}
+                  {/* {userStep >= 5 && <div className='absolute w-full h-[5px] top-0 bottom-0 m-auto bg-gradient'></div>} */}
                   <p className='text-2xl flex items-center justify-between gap-15 '>
-                    <span className='text-8xl text-gradient '>5</span>
+                    <span className='text-8xl text-gradient'>5</span>
                     Crea tu firma
                     {userStep >= 5 ? (
-                      <span>Listo.</span>
+                      <span className='text-[var(--primary)] text-4xl'>
+                        <ImCheckmark />
+                      </span>
                     ) : (
-                      <Button
-                        onClick={() => {
-                          navigateToStep(5)
-                        }}
-                      >
-                        Pendiente
-                      </Button>
+                      <span>
+                        {userStep == 4 ? (
+                          <Button
+                            onClick={() => {
+                              navigateToStep(5)
+                            }}
+                          >
+                            Pendiente
+                          </Button>
+                        ) : (
+                          <Button disabled={true}>No disponible</Button>
+                        )}
+                      </span>
                     )}
                   </p>
                 </div>
